@@ -1,4 +1,4 @@
-﻿namespace Domain
+﻿namespace Core.Entities
 {
     public class Product
     {
