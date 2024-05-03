@@ -9,7 +9,7 @@ namespace Core
 {
     public interface IProductRepository
     {
-        Task<Product> GetProductAsync(int id);
+        Task<Product?> GetProductAsync(int id);
         Task<IEnumerable<Product>> GetProductsAsync();
     }
 }
