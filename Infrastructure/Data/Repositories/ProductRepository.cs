@@ -1,32 +1,15 @@
-﻿using Core;
-using Core.Entities;
+﻿using Core.Entities;
+using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : GenericRepository<Product>
     {
-        private readonly StoreContext _context;
-        public ProductRepository(StoreContext context)
+        public ProductRepository(StoreContext context) : base(context)
         {
-            _context = context;
         }
-
-        public async Task<Product?> GetProductAsync(int id)
-        {
-            var product = await _context.Products
-                .Include(p => p.ProductBrand)
-                .Include(p => p.ProductType)
-                .FirstOrDefaultAsync(p => p.Id == id);
-            return product;
-        }
-
-        public async Task<IEnumerable<ProductBrand>> GetProductBrandsAsync()
-        {
-            return await _context.ProductBrands.ToListAsync();
-        }
-
-        public async Task<IEnumerable<Product>> GetProductsAsync()
+        public override async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await _context.Products
                 .Include(p => p.ProductBrand)
@@ -34,9 +17,13 @@ namespace Infrastructure.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ProductType>> GetProductTypesAsync()
+        public override async Task<Product?> GetByIdAsync(int id)
         {
-            return await _context.ProductTypes.ToListAsync();
+            var product = await _context.Products
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .FirstOrDefaultAsync(p => p.Id == id);
+            return product;
         }
     }
 }
