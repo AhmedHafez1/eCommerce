@@ -6,8 +6,15 @@ namespace Core.Specification
     {
         public ProductsWithTypesAndBrandsSpec()
         {
-            Includes.Add(p => p.ProductBrand);
-            Includes.Add(p => p.ProductType);
+            AddInclude(p => p.ProductBrand);
+            AddInclude(p => p.ProductType);
+        }
+
+        public ProductsWithTypesAndBrandsSpec(int id)
+        {
+            Predicate = x => x.Id == id;
+            AddInclude(p => p.ProductBrand);
+            AddInclude(p => p.ProductType);
         }
     }
 }

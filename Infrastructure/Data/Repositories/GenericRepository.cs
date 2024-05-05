@@ -15,13 +15,13 @@ namespace Infrastructure.Data.Repositories
             _context = storeContext;
         }
 
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().Where(predicate).ToListAsync();
         }
 
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> ListAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }
@@ -31,10 +31,18 @@ namespace Infrastructure.Data.Repositories
             return await _context.Set<T>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> FindAsyncWithSpec(ISpecification<T> spec)
+        public async Task<IEnumerable<T>> ListWithSpecAsync(ISpecification<T> specification)
         {
-            var query = SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
-            return await query.ToListAsync();
+            return await ApplySpecification(specification).ToListAsync();
+        }
+        public async Task<T?> FindWithSpecAsync(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).FirstOrDefaultAsync();
+        }
+
+        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+        {
+            return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification);
         }
     }
 }

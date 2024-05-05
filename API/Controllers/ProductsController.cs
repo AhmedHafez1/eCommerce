@@ -25,7 +25,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            var products = await _productRepo.FindAsyncWithSpec(new ProductsWithTypesAndBrandsSpec());
+            var products = await _productRepo.ListWithSpecAsync(new ProductsWithTypesAndBrandsSpec());
 
             return Ok(products);
         }
@@ -33,20 +33,21 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product?>> GetProduct(int id)
         {
-            return await _productRepo.GetByIdAsync(id);
+            var product = await _productRepo.FindWithSpecAsync(new ProductsWithTypesAndBrandsSpec(id));
+            return product;
         }
 
         [HttpGet("brands")]
         public async Task<ActionResult<IEnumerable<ProductBrand>>> GetProductBrands()
         {
-            var productBrands = await _brandRepo.GetAllAsync();
+            var productBrands = await _brandRepo.ListAllAsync();
             return Ok(productBrands);
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IEnumerable<ProductType>>> GetProductTypes()
         {
-            var productTypes = await _typeRepo.GetAllAsync();
+            var productTypes = await _typeRepo.ListAllAsync();
             return Ok(productTypes);
         }
     }

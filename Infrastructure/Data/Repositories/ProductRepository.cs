@@ -8,7 +8,7 @@ namespace Infrastructure.Data.Repositories
         public ProductRepository(StoreContext context) : base(context)
         {
         }
-        public override async Task<IEnumerable<Product>> GetAllAsync()
+        public override async Task<IEnumerable<Product>> ListAllAsync()
         {
             return await _context.Products
                 .Include(p => p.ProductBrand)
