@@ -5,10 +5,11 @@ namespace API.Errors
 {
     public class ErrorResponse : ProblemDetails
     {
-        public ErrorResponse(int status, string message = null!)
+        public ErrorResponse(int status, string message = null!, string? detail = null )
         {
             Status = status;
             Message = message ?? GetDefaultErrorMessage(status);
+            Detail = detail;
         }
 
         public string Message { get; set; }

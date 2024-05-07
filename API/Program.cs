@@ -1,3 +1,4 @@
+using API.Middlewares;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
@@ -25,7 +26,9 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseStatusCodePagesWithReExecute("/api/error/{0}");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
