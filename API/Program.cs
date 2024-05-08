@@ -1,9 +1,12 @@
+using API.Errors;
 using API.Middlewares;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,19 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+        .Where(k => k.Value!.Errors.Any())
+        .SelectMany(key => key.Value!.Errors)
+        .Select(e => e.ErrorMessage);
+
+        var errorResponse = new ErrorResponse((int)HttpStatusCode.BadRequest, null!, null, errors);
+        return new NotFoundObjectResult(errorResponse);
+    };
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

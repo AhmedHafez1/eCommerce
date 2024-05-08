@@ -3,10 +3,7 @@ using Core.DTOs;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specification;
-using Infrastructure.Data;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -30,8 +27,6 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            throw new NullReferenceException();
-            
             var products = await _productRepo.ListWithSpecAsync(new ProductsWithTypesAndBrandsSpec());
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }

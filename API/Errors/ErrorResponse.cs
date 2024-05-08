@@ -5,14 +5,16 @@ namespace API.Errors
 {
     public class ErrorResponse : ProblemDetails
     {
-        public ErrorResponse(int status, string message = null!, string? detail = null )
+        public ErrorResponse(int status, string message = null!, string? detail = null, IEnumerable<string>? errors = null)
         {
             Status = status;
             Message = message ?? GetDefaultErrorMessage(status);
             Detail = detail;
+            Errors = errors;
         }
 
         public string Message { get; set; }
+        public IEnumerable<string>? Errors { get; set; }
 
         private string GetDefaultErrorMessage(int statusCode)
         {
