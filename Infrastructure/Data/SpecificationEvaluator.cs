@@ -14,6 +14,15 @@ namespace Core.Specification
                 query = query.Where(spec.Predicate);
             }
 
+            if (spec.OrderBy is not null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+            else if (spec.OrderByDesc is not null)
+            {
+                query = query.OrderByDescending(spec.OrderByDesc);
+            }
+
             query = spec.Includes.Aggregate(query, (query, includeExpression) => query.Include(includeExpression));
 
             return query;

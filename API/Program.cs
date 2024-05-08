@@ -1,39 +1,14 @@
-using API.Errors;
+using API.Extension_Methods;
 using API.Middlewares;
-using Core.Entities;
-using Core.Interfaces;
 using Infrastructure.Data;
-using Infrastructure.Data.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<StoreContext>(opt =>
-{
-    opt.UseSqlite(builder.Configuration.GetConnectionString("Default"));
-});
-
-builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.InvalidModelStateResponseFactory = context =>
-    {
-        var errors = context.ModelState
-        .Where(k => k.Value!.Errors.Any())
-        .SelectMany(key => key.Value!.Errors)
-        .Select(e => e.ErrorMessage);
-
-        var errorResponse = new ErrorResponse((int)HttpStatusCode.BadRequest, null!, null, errors);
-        return new NotFoundObjectResult(errorResponse);
-    };
-});
+builder.Services.AddApplicationServices(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -72,7 +47,7 @@ if (app.Environment.IsDevelopment())
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "An Error Occured during applying migrations");
+        logger.LogError(ex, "An Error Occured during applying migrations.");
     }
 }
 app.Run();
