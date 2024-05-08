@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using API.Errors;
+using AutoMapper;
 using Core.DTOs;
 using Core.Entities;
 using Core.Interfaces;
@@ -30,13 +31,13 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            throw new NullReferenceException();
-            
             var products = await _productRepo.ListWithSpecAsync(new ProductsWithTypesAndBrandsSpec());
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
             var product = await _productRepo.FindWithSpecAsync(new ProductsWithTypesAndBrandsSpec(id));
