@@ -7,7 +7,8 @@ namespace Core.Specification
     {
         public ProductsWithTypesAndBrandsSpec(ProductQueryParams queryParams)
         {
-            Predicate = p => (!queryParams.BrandId.HasValue || queryParams.BrandId == p.ProductBrandId) &&
+            Predicate = p => (string.IsNullOrEmpty(queryParams.Search) || p.Name.ToLower().Contains(queryParams.Search ?? "")) &&
+                             (!queryParams.BrandId.HasValue || queryParams.BrandId == p.ProductBrandId) &&
                              (!queryParams.TypeId.HasValue || queryParams.TypeId == p.ProductTypeId);
             AddInclude(p => p.ProductBrand);
             AddInclude(p => p.ProductType);

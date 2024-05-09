@@ -1,8 +1,8 @@
 ﻿namespace API.Helpers
 {
-    public class PaginationData<T>
+    public class Pagination<T>
     {
-        public PaginationData(int pageIndex, int count, int pageSize, IEnumerable<T> data)
+        public Pagination(int pageIndex, int count, int pageSize, IEnumerable<T> data)
         {
             PageIndex = pageIndex;
             Count = count;

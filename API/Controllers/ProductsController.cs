@@ -34,7 +34,7 @@ namespace API.Controllers
             var totalCount = await _productRepo.CountWithSpecAsync(new ProductsCountSpec(queryParams));
 
             var productsDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
-            return Ok(new PaginationData<ProductDto>(queryParams.PageIndex, totalCount, queryParams.PageSize, productsDtos));
+            return Ok(new Pagination<ProductDto>(queryParams.PageIndex, totalCount, queryParams.PageSize, productsDtos));
         }
 
         [HttpGet("{id}")]

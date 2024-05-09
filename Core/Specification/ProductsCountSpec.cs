@@ -12,8 +12,9 @@ namespace Core.Specification
     {
         public ProductsCountSpec(ProductQueryParams queryParams)
         {
-            Predicate = p => (!queryParams.BrandId.HasValue || queryParams.BrandId == p.ProductBrandId)
-                                && (!queryParams.TypeId.HasValue || queryParams.TypeId == p.ProductTypeId);
+            Predicate = p => (!string.IsNullOrEmpty(queryParams.Search) || p.Name.ToLower().Contains(queryParams.Search ?? "")) &&
+                           (!queryParams.BrandId.HasValue || queryParams.BrandId == p.ProductBrandId) &&
+                           (!queryParams.TypeId.HasValue || queryParams.TypeId == p.ProductTypeId);
         }
     }
 }
