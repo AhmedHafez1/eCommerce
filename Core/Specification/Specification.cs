@@ -14,6 +14,10 @@ namespace Core.Specification
 
         public Expression<Func<T, object>>? OrderByDesc { get; private set; }
 
+        public int Take { get; private set; }
+        public int Skip { get; private set; }
+        public bool PaginationEnabled { get; private set; }
+
         protected void AddInclude(Expression<Func<T, BaseEntity>> includeExpression)
         {
             Includes.Add(includeExpression);
@@ -27,6 +31,13 @@ namespace Core.Specification
         protected void SetOrderByDesc(Expression<Func<T, object>>? OrderByDescExpression)
         {
             OrderByDesc = OrderByDescExpression;
+        }
+
+        protected void ApplyPagination(int take, int skip)
+        {
+            Take = take;
+            Skip = skip;
+            PaginationEnabled = true;
         }
     }
 }

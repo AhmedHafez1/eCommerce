@@ -1,17 +1,18 @@
-﻿using Core.Entities;
+﻿using Core.Classes;
+using Core.Entities;
 
 namespace Core.Specification
 {
     public class ProductsWithTypesAndBrandsSpec : Specification<Product>
     {
-        public ProductsWithTypesAndBrandsSpec(string? sort = null, int? brandId = null, int? typeId = null)
+        public ProductsWithTypesAndBrandsSpec(ProductQueryParams queryParams)
         {
-            Predicate = p => (!brandId.HasValue || brandId == p.ProductBrandId) &&
-                             (!typeId.HasValue || typeId == p.ProductTypeId);
+            Predicate = p => (!queryParams.BrandId.HasValue || queryParams.BrandId == p.ProductBrandId) &&
+                             (!queryParams.TypeId.HasValue || queryParams.TypeId == p.ProductTypeId);
             AddInclude(p => p.ProductBrand);
             AddInclude(p => p.ProductType);
 
-            switch (sort)
+            switch (queryParams.Sort)
             {
                 case "priceAsc":
                     SetOrderBy(p => p.Price);
@@ -27,6 +28,7 @@ namespace Core.Specification
                     break;
             }
 
+            ApplyPagination(queryParams.PageSize, queryParams.PageSize * (queryParams.PageIndex - 1));
         }
 
         public ProductsWithTypesAndBrandsSpec(int id)

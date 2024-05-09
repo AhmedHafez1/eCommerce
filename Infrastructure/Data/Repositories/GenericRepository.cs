@@ -39,6 +39,10 @@ namespace Infrastructure.Data.Repositories
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
+        public async Task<int> CountWithSpecAsync(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).CountAsync();
+        }
 
         private IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {

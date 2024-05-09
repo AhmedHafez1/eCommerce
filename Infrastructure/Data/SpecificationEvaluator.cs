@@ -23,6 +23,11 @@ namespace Core.Specification
                 query = query.OrderByDescending(spec.OrderByDesc);
             }
 
+            if (spec.PaginationEnabled)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
+
             query = spec.Includes.Aggregate(query, (query, includeExpression) => query.Include(includeExpression));
 
             return query;

@@ -9,5 +9,6 @@ namespace Core.Interfaces
         Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> predicate);
         Task<IEnumerable<T>> ListWithSpecAsync(ISpecification<T> specification);
         Task<T?> FindWithSpecAsync(ISpecification<T> specification);
+        Task<int> CountWithSpecAsync(ISpecification<T> specification);
     }
 }
