@@ -21,6 +21,7 @@ namespace API.Extension_Methods
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IRepository<Product>, ProductRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = context =>
@@ -33,6 +34,14 @@ namespace API.Extension_Methods
                     var errorResponse = new ErrorResponse((int)HttpStatusCode.BadRequest, null!, null, errors);
                     return new NotFoundObjectResult(errorResponse);
                 };
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
             });
 
             return services;
