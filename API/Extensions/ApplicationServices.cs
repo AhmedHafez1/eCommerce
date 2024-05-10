@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Errors;
 using System.Net;
+using StackExchange.Redis;
 
 namespace API.Extension_Methods
 {
@@ -42,6 +43,12 @@ namespace API.Extension_Methods
                 {
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
                 });
+            });
+
+            services.AddSingleton<IConnectionMultiplexer>(c =>
+            {
+                var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis")!);
+                return ConnectionMultiplexer.Connect(options);
             });
 
             return services;
