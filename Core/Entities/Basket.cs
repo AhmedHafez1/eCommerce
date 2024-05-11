@@ -3,6 +3,6 @@
     public class Basket
     {
         public string? Id { get; set; }
-        public List<BasketItem> BasketItems { get; set; } = [];
+        public List<BasketItem> Items { get; set; } = [];
     }
 }
