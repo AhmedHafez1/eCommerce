@@ -2,12 +2,12 @@ using API.Extension_Methods;
 using API.Extensions;
 using API.Middlewares;
 using Infrastructure.Data;
+using Infrastructure.Data.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddAppIdentityServices(builder.Configuration);
@@ -22,15 +22,16 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseStatusCodePagesWithReExecute("/api/error/{0}");
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
@@ -44,10 +45,12 @@ if (app.Environment.IsDevelopment())
     using var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<StoreContext>();
+    var identityContext = services.GetRequiredService<AppIdentityContext>();
     var logger = services.GetRequiredService<ILogger<Program>>();
     try
     {
         await context.Database.MigrateAsync();
+        await identityContext.Database.MigrateAsync();
     }
     catch (Exception ex)
     {
