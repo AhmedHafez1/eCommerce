@@ -1,4 +1,7 @@
-﻿using Infrastructure.Data.Identity;
+﻿using Core.Entities.Identity;
+using Infrastructure.Data.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
@@ -11,6 +14,15 @@ namespace API.Extensions
             {
                 opt.UseSqlite(config.GetConnectionString("Identity"));
             });
+
+            services.AddIdentityCore<AppUser>(opt =>
+            {
+                // Configure identity options if needed
+            }).AddEntityFrameworkStores<AppIdentityContext>()
+            .AddSignInManager<SignInManager<AppUser>>();
+
+            services.AddAuthentication();
+            services.AddAuthorization();
 
             return services;
         }
