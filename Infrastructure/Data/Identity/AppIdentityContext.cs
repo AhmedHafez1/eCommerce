@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,9 +17,14 @@ namespace Infrastructure.Data.Identity
             {
                 Id = "123456789",
                 UserName = "omar@aah.com",
+                NormalizedUserName = "OMAR@AAH.COM",
                 Email = "omar@aah.com",
+                NormalizedEmail = "OMAR@AAH.COM",
                 PhoneNumber = "1234567890",
                 DisplayName = "Omar Ahmad",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                PasswordHash = new PasswordHasher<AppUser>().HashPassword(null, "Password123!")
             });
 
             builder.Entity<Address>().HasData(new Address
