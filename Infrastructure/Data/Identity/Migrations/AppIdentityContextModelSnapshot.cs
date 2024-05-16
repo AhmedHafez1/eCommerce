@@ -137,17 +137,17 @@ namespace Infrastructure.Migrations
                         {
                             Id = "123456789",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "61a3e66c-ef51-4654-a2d2-52d151c7e301",
+                            ConcurrencyStamp = "3d396f0d-8040-428c-b359-5570fa4714f7",
                             DisplayName = "Omar Ahmad",
                             Email = "omar@aah.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "OMAR@AAH.COM",
                             NormalizedUserName = "OMAR@AAH.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEH1i2TUqzZrUNiZqO4X9dElWwW9Cmij3ZYfKhzC6Aa7iQRZQBioKVTvptfDHt8KxRQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECaorPzWJEKZhK7VIxEOCtMPU4Ok7wW/uxcPwrxjCXjU2u17rQryBm8d6++KrK+47w==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "6c98c631-841a-451d-b823-57cdc5fc768f",
+                            SecurityStamp = "8f416c35-b343-4b69-9e02-f2f5e79bc954",
                             TwoFactorEnabled = false,
                             UserName = "omar@aah.com"
                         });

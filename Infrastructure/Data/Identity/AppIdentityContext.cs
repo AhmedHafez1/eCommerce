@@ -24,7 +24,7 @@ namespace Infrastructure.Data.Identity
                 DisplayName = "Omar Ahmad",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
-                PasswordHash = new PasswordHasher<AppUser>().HashPassword(null, "Password123!")
+                PasswordHash = new PasswordHasher<AppUser>().HashPassword(null!, "Password123!")
             });
 
             builder.Entity<Address>().HasData(new Address

@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppIdentityContext))]
-    partial class AppIdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20240516094612_Identity_Seed")]
+    partial class Identity_Seed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
@@ -52,6 +55,17 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Address");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AppUserId = "123456789",
+                            Building = "17",
+                            City = "Giza",
+                            Country = "Egypt",
+                            Street = "St. 123"
+                        });
                 });
 
             modelBuilder.Entity("Core.Entities.Identity.AppUser", b =>
@@ -120,6 +134,26 @@ namespace Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "123456789",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3d396f0d-8040-428c-b359-5570fa4714f7",
+                            DisplayName = "Omar Ahmad",
+                            Email = "omar@aah.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "OMAR@AAH.COM",
+                            NormalizedUserName = "OMAR@AAH.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECaorPzWJEKZhK7VIxEOCtMPU4Ok7wW/uxcPwrxjCXjU2u17rQryBm8d6++KrK+47w==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "8f416c35-b343-4b69-9e02-f2f5e79bc954",
+                            TwoFactorEnabled = false,
+                            UserName = "omar@aah.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

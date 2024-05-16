@@ -5,7 +5,7 @@
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Seed_Users : Migration
+    public partial class Identity_Seed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -13,7 +13,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DisplayName", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "123456789", 0, "61a3e66c-ef51-4654-a2d2-52d151c7e301", "Omar Ahmad", "omar@aah.com", true, false, null, "OMAR@AAH.COM", "OMAR@AAH.COM", "AQAAAAIAAYagAAAAEH1i2TUqzZrUNiZqO4X9dElWwW9Cmij3ZYfKhzC6Aa7iQRZQBioKVTvptfDHt8KxRQ==", "1234567890", true, "6c98c631-841a-451d-b823-57cdc5fc768f", false, "omar@aah.com" });
+                values: new object[] { "123456789", 0, "3d396f0d-8040-428c-b359-5570fa4714f7", "Omar Ahmad", "omar@aah.com", true, false, null, "OMAR@AAH.COM", "OMAR@AAH.COM", "AQAAAAIAAYagAAAAECaorPzWJEKZhK7VIxEOCtMPU4Ok7wW/uxcPwrxjCXjU2u17rQryBm8d6++KrK+47w==", "1234567890", true, "8f416c35-b343-4b69-9e02-f2f5e79bc954", false, "omar@aah.com" });
 
             migrationBuilder.InsertData(
                 table: "Address",
