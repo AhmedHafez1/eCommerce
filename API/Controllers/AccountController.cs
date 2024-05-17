@@ -61,7 +61,7 @@ namespace API.Controllers
             {
                 Email = user.Email,
                 DisplayName = user.DisplayName,
-                Token = "Tokennnnnnnnn"
+                Token = _tokenService.GetToken(user)
             };
         }
     }
