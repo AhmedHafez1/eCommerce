@@ -1,5 +1,7 @@
 ﻿using Core.Entities.Identity;
+using Core.Interfaces;
 using Infrastructure.Data.Identity;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +37,8 @@ namespace API.Extensions
                     };
                 });
             services.AddAuthorization();
+
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
         }
