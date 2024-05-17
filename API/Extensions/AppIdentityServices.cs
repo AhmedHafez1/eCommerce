@@ -1,8 +1,12 @@
 ﻿using Core.Entities.Identity;
+using Core.Interfaces;
 using Infrastructure.Data.Identity;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace API.Extensions
 {
@@ -21,8 +25,20 @@ namespace API.Extensions
             }).AddEntityFrameworkStores<AppIdentityContext>()
             .AddSignInManager<SignInManager<AppUser>>();
 
-            services.AddAuthentication();
+            services.AddAuthentication()
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Token:Key"]!)),
+                        ValidateIssuer = true,
+                        ValidIssuer = config["Token:Issuer"]
+                    };
+                });
             services.AddAuthorization();
+
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
         }
