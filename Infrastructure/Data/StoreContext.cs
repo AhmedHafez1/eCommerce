@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
@@ -44,6 +45,12 @@ namespace Infrastructure.Data
 
                 }
             }
+
+            modelBuilder.Entity<Order>().ComplexProperty(o => o.ShipToAddress);
+            modelBuilder.Entity<Order>().Property(o => o.Status)
+                .HasConversion(e => e.ToString(), s => (OrderStatus)Enum.Parse(typeof(OrderStatus), s));
+
+            modelBuilder.Entity<OrderItem>().ComplexProperty(oi => oi.ProductItem);
         }
     }
 }
