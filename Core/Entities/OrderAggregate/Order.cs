@@ -14,13 +14,9 @@ namespace Core.Entities.OrderAggregate
         [Column(TypeName = "decimal(18,2)")]
         public decimal SubTotal { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal Total
+        public decimal GetTotal()
         {
-            get
-            {
-                return SubTotal + DeliveryMethod.Price;
-            }
+            return SubTotal + DeliveryMethod.Price;
         }
     }
 

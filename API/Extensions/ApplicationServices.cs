@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using API.Errors;
 using System.Net;
 using StackExchange.Redis;
+using Infrastructure.Services;
 
 namespace API.Extension_Methods
 {
@@ -22,6 +23,7 @@ namespace API.Extension_Methods
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IRepository<Product>, ProductRepository>();
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.Configure<ApiBehaviorOptions>(options =>

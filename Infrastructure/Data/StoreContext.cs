@@ -13,6 +13,9 @@ namespace Infrastructure.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<ProductBrand> ProductBrands { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,10 +28,14 @@ namespace Infrastructure.Data
             var types = JsonSerializer.Deserialize<List<ProductType>>(
                 File.ReadAllText("../Infrastructure/Data/SeedData/types.json")
                 );
+            var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(
+                File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json")
+                );
 
             modelBuilder.Entity<Product>().HasData(products!);
             modelBuilder.Entity<ProductBrand>().HasData(brands!);
             modelBuilder.Entity<ProductType>().HasData(types!);
+            modelBuilder.Entity<DeliveryMethod>().HasData(deliveryMethods!);
 
             if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
             {
